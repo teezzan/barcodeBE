@@ -1,4 +1,21 @@
-// const { findAllPackage, removePackage, updatePackage } = require("./database/db-func");
+const { findAllPackage, removePackage, updatePackage } = require("./database/db-func");
+const spawn = require("child_process").spawn;
+const pythonProcess = spawn('python', ["usb/usb.py"]);
+
+pythonProcess.stdout.on('data', (data) => {
+    console.log(data.toString());
+    let code = data.toString();
+    let splitPayload = code.split('*');
+    if (splitPayload.length != 3) {
+        console.log('Location')
+    }
+    else {
+        console.log('Product')
+    }
+
+
+});
+
 
 // updatePackage('A', 'B', 'C1', 'D11').then(x => console.log(x))
 //     .then(() => {
@@ -13,13 +30,3 @@
 //                     })
 //             })
 //     })
-
-
-async function printInput() {
-    const streamReadAll = require('stream-read-all')
-    console.log('reading');
-    const stdin = await streamReadAll(process.stdin)
-    let input = stdin.toString();
-    if (input.indexOf('X') !== 0)
-        console.log('contains X')
-}
