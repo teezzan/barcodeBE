@@ -1,6 +1,8 @@
 const { findAllPackage, removePackage, updatePackage } = require("./database/db-func");
 const spawn = require("child_process").spawn;
 const pythonProcess = spawn('python3', ["usb/usb.py"]);
+// const pythonProcess = spawn('python3', ["usb/usb_test.py"]);
+
 let slot1 = null;
 let slot2 = null;
 
