@@ -43,15 +43,14 @@ exports.updatePackage = async (colA, colB, colC, location) => {
 
 }
 
-exports.removePackage = async (colA, colB, colC, location) => {
+exports.removePackage = async (colA, colB, colC) => {
     return new Promise(async (resolve, reject) => {
         let db = await Database.get();
         let result = await db.test.findOne({
             selector: {
                 colA,
                 colB,
-                colC,
-                location,
+                colC
             }
         }).exec();
         if (!result) {
