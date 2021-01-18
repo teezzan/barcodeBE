@@ -79,3 +79,24 @@ exports.findAllPackage = async () => {
     })
 
 }
+
+
+exports.findPackagesLocation = async (location) => {
+    return new Promise(async (resolve, reject) => {
+        let output = [];
+        let db = await Database.get();
+        let docs = await db.test.find({
+  selector: {
+    location: {$eq: `${location}`}
+  }
+}).exec();
+        if (docs.length !== 0) {
+            docs.forEach(x => {
+                output.push(x.toJSON());
+            });
+        }
+
+        resolve(output);
+    })
+
+}
