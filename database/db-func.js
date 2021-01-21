@@ -19,23 +19,23 @@ exports.updatePackage = async (colA, colB, colC, location) => {
         let db = await Database.get();
         let result = await db.test.findOne({
             selector: {
-                colA,
-                colB,
-                colC,
-                location,
+                colA: { $eq: `${colA}` },
+                colB: { $eq: `${colB}` },
+                colC: { $eq: `${colC}` },
             }
         }).exec();
         if (!result) {
-            console.log("result = ")
-            let resp = await db.test.updateDB(colA, colB, colC, location);
+            console.log("no result  ")
+            let resp = await db.test.insert({ colA, colB, colC, location });
             resolve(resp.toJSON())
         }
         else {
-            if (result.location !== location) {
-                result.location = location;
-                result.save()
-            }
-            resolve(result.toJSON());
+            let resp = await result.update({
+                $set: {
+                    location: `${location}`
+                }
+            })
+            resolve(resp);
         }
 
     })
@@ -86,10 +86,10 @@ exports.findPackagesLocation = async (location) => {
         let output = [];
         let db = await Database.get();
         let docs = await db.test.find({
-  selector: {
-    location: {$eq: `${location}`}
-  }
-}).exec();
+            selector: {
+                location: { $eq: `${location}` }
+            }
+        }).exec();
         if (docs.length !== 0) {
             docs.forEach(x => {
                 output.push(x.toJSON());

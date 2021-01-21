@@ -27,8 +27,7 @@ const testSchema = {
             type: 'string',
         },
         location: {
-            type: 'string',
-            primary: true
+            type: 'string'
         }
     },
     required: ['colA', 'colB', 'colC', 'location'],
